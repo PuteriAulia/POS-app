@@ -8,7 +8,7 @@
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 text-center text-sm-left">
             <div class="flex-sm-fill">
                 <h1 class="h3 font-w700 mb-2">
-                    Halaman Dashboard
+                    Halaman Dashboard nih
                 </h1>
                 <h2 class="h6 font-w500 text-muted mb-0">
                     Selamat datang {{ ucwords(Auth::user()->name) }}, semoga harimu menyenangkan.
