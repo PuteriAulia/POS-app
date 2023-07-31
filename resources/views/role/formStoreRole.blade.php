@@ -13,8 +13,8 @@
                 <div class="block-content font-size-sm">
                     <div class="form-group">
                         <label for="name">Nama</label>
-                        <input type="text" class="form-control form-control-alt" id="nameStore" name="name" placeholder="Masukkan nama role..">
-                        <span class="text-danger error_text name_error"></span>
+                        <input type="text" class="form-control form-control-alt" id="nameStore" name="role_name" placeholder="Masukkan nama role..">
+                        <span class="text-danger error_text role_name_error"></span>
                     </div>
                 </div>
                 <div class="block-content block-content-full text-right border-top">

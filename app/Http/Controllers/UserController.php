@@ -58,18 +58,20 @@ class UserController extends Controller
         $validate = Validator::make($request->all(),[
             'name'     => 'required',
             'role'     => 'required',
-            'email'    => 'required|email',
+            'email'    => 'required|email|unique:users',
             'phone'    => 'required|numeric',
-            'username' => 'required',
+            'username' => 'required|unique:users',
             'password' => 'required',
         ],[
             'name.required'      => "Nama user wajib diisi",
             'role.required'      => "Role wajib diisi",
             'email.required'     => "Email wajib diisi",
             'email.email'        => "Wajib berformat email",
+            'email.unique'       => "Email telah terdaftar",
             'phone.required'     => "Nomor telepon wajib diisi",
-            'phone.numeric'     => "Nomor telepon berformat angka",
+            'phone.numeric'      => "Nomor telepon berformat angka",
             'username.required'  => "Username wajib diisi",
+            'username.unique'    => "Username telah terdaftar",
             'password.required'  => "Password wajib diisi",
         ]);
 

@@ -43,9 +43,10 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->all(),[
-            'name' => 'required',
+            'role_name' => 'required|unique:roles',
         ],[
-            'name.required' => "Nama wajib diisi",
+            'role_name.required' => "Nama wajib diisi",
+            'role_name.unique'   => "Role telah terdaftar",
         ]);
 
         if($validate->fails()){
@@ -66,7 +67,7 @@ class RoleController extends Controller
             // Store product
             Role::create([
                 'role_code'  => $newId,
-                'role_name'  => $request->name,
+                'role_name'  => $request->role_name,
                 'role_status'=> 'active',
             ]);
 

@@ -100,7 +100,7 @@
             url : 'role',
             type: 'POST',
             data: {
-                name : $('#nameStore').val(),
+                role_name : $('#nameStore').val(),
             },
             success : function(res){
                 if (res.errors) {
