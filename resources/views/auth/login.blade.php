@@ -69,10 +69,16 @@
                                                 @csrf
                                                 <div class="py-3">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control form-control-alt form-control-lg" id="username" name="username" placeholder="Username">
+                                                        <input type="text" class="form-control form-control-alt form-control-lg" id="username" name="username" placeholder="Username" >
+                                                        @error('username')
+                                                            <span class="text-danger text-sm">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                     <div class="form-group">
                                                         <input type="password" class="form-control form-control-alt form-control-lg" id="password" name="password" placeholder="Password">
+                                                        @error('password')
+                                                            <span class="text-danger text-sm">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
