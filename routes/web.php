@@ -28,36 +28,42 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('login',[AuthController::class,'login'])->name('login')->middleware('guest');
-Route::post('login',[AuthController::class,'authLogin']);
-Route::get('logout',[AuthController::class,'logout'])->middleware('auth');
+Route::group(['middleware' => 'guest'], function(){
+    Route::get('login',[AuthController::class,'login'])->name('login');
+    Route::post('login',[AuthController::class,'authLogin']);
+});
 
-Route::get('/',[DashboardController::class,'index'])->middleware('auth');
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('logout',[AuthController::class,'logout']);
+    Route::get('/',[DashboardController::class,'index']);
+    
+    Route::resource('suplier',SuplierController::class);
+    Route::put('suplier/{id}/hapus',[SuplierController::class,'delete']);
 
-Route::resource('suplier',SuplierController::class)->middleware('auth');
-Route::put('suplier/{id}/hapus',[SuplierController::class,'delete'])->middleware('auth');
+    Route::resource('barang',ProductController::class);
+    Route::put('barang/{id}/hapus',[ProductController::class,'delete']);
 
-Route::resource('barang',ProductController::class)->middleware('auth');
-Route::put('barang/{id}/hapus',[ProductController::class,'delete'])->middleware('auth');
+    Route::resource('barang-masuk',ProductInController::class);
+    Route::resource('barang-keluar',ProductOutController::class);
 
-Route::resource('barang-masuk',ProductInController::class)->middleware('auth');
-Route::resource('barang-keluar',ProductOutController::class)->middleware('auth');
+    Route::resource('kasir',CashierController::class);
+    Route::get('kasir/hapus-keranjang/{id}',[CashierController::class, 'delete_cart']);
+    Route::post('kasir/pembayaran',[CashierController::class, 'payment_process']);
+    Route::post('kasir/simpan-pembayaran',[CashierController::class, 'store_payment']);
 
-Route::resource('kasir',CashierController::class)->middleware('auth');
-Route::get('kasir/hapus-keranjang/{id}',[CashierController::class, 'delete_cart'])->middleware('auth');
-Route::post('kasir/pembayaran',[CashierController::class, 'payment_process'])->middleware('auth');
-Route::post('kasir/simpan-pembayaran',[CashierController::class, 'store_payment'])->middleware('auth');
+    Route::resource('transaksi',TransactionController::class);
+    Route::get('/transaksi/printDetail/{id}',[TransactionController::class, 'print']);
 
-Route::resource('transaksi',TransactionController::class)->middleware('auth');
-Route::get('/transaksi/printDetail/{id}',[TransactionController::class, 'print'])->middleware('auth');
+    Route::resource('user',UserController::class);
+    Route::put('user/{id}/hapus',[UserController::class,'delete']);
 
-Route::resource('user',UserController::class)->middleware('auth');
-Route::put('user/{id}/hapus',[UserController::class,'delete'])->middleware('auth');
+    Route::resource('role',RoleController::class);
+    Route::put('role/{id}/hapus',[RoleController::class,'delete']);
 
-Route::resource('role',RoleController::class)->middleware('auth');
-Route::put('role/{id}/hapus',[RoleController::class,'delete'])->middleware('auth');
+    Route::get('pengaturan-akun/{id}',[SettingController::class,'form_setting_account']);
+    Route::post('pengaturan-akun',[SettingController::class,'setting_account']);
+    Route::get('pengaturan-password/{id}',[SettingController::class,'form_setting_password']);
+    Route::post('pengaturan-password',[SettingController::class,'setting_password']);
+});
 
-Route::get('pengaturan-akun/{id}',[SettingController::class,'form_setting_account'])->middleware('auth');
-Route::post('pengaturan-akun',[SettingController::class,'setting_account'])->middleware('auth');
-Route::get('pengaturan-password/{id}',[SettingController::class,'form_setting_password'])->middleware('auth');
-Route::post('pengaturan-password',[SettingController::class,'setting_password'])->middleware('auth');
+
