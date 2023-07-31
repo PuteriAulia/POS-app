@@ -74,6 +74,7 @@
                         <span class="nav-main-link-name">Transaksi</span>
                     </a>
                 </li>
+                @if (Auth::user()->role->role_name === "pemilik")
                 <li class="nav-main-heading">User</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link" href="/user">
@@ -87,6 +88,7 @@
                         <span class="nav-main-link-name">Role</span>
                     </a>
                 </li>
+                @endif
             </ul>
         </div>
         <!-- END Side Navigation -->

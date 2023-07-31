@@ -78,46 +78,20 @@ class UserController extends Controller
         if($validate->fails()){
             return response()->json(['errors'=>$validate->errors()->toArray()]);
         }else{
-            // Check email
-            $findEmail = User::where('email',$inp_email)->where('status','active')->get();
-            $findUsername = User::where('username',$inp_username)->where('status','active')->get();
+            User::create([
+                'name' => $inp_name,
+                'username' => $inp_username,
+                'email' => $inp_email,
+                'phone' => $inp_phone,
+                'role_id' => $inp_role,
+                'password' => Hash::make($inp_password),
+                'status' => 'active',
+            ]);
 
-            $checkEmail = count($findEmail);
-            $checkUsername = count($findUsername);
-
-            // Check email and username
-            if ($checkEmail == 1 && $checkUsername == 1) {
-                // Email and username already registered
-                return response()->json([
-                    'status' => 'failed email and username',
-                    'message'=> 'Email dan username telah terdaftar',
-                ]);
-            }elseif ($checkEmail == 1) {
-                return response()->json([
-                    'status' => 'failed email',
-                    'message'=> 'Email telah terdaftar',
-                ]);
-            }elseif ($checkUsername == 1) {
-                return response()->json([
-                    'status' => 'failed username',
-                    'message'=> 'Username telah terdaftar',
-                ]);
-            }else{
-                User::create([
-                    'name' => $inp_name,
-                    'username' => $inp_username,
-                    'email' => $inp_email,
-                    'phone' => $inp_phone,
-                    'role_id' => $inp_role,
-                    'password' => Hash::make($inp_password),
-                    'status' => 'active',
-                ]);
-
-                return response()->json([
-                    'status' => 'success',
-                    'message'=> 'Data berhasil ditambahkan',
-                ]);
-            }
+            return response()->json([
+                'status' => 'success',
+                'message'=> 'Data berhasil ditambahkan',
+            ]);
         }
     }
 
@@ -148,6 +122,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // return $request->role;
         $validate = Validator::make($request->all(),[
             'name'  =>  'required',
             'phone' =>  'required|numeric',

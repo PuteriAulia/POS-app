@@ -38,12 +38,12 @@
                 <table id="user-table" class="table table-striped table-vcenter">
                     <thead>
                         <tr>
-                            <th class="text-center" style="width: 10%;">No</th>
+                            <th class="text-center" style="width: 5%;">No</th>
                             <th class="text-center" style="width: 20%;">Nama</th>
                             <th class="text-center" style="width: 15%;">Username</th>
                             <th class="text-center" style="width: 15%;">Email</th>
                             <th class="text-center" style="width: 15%;">Role</th>
-                            <th class="text-center" style="width: 20%;">Nomor telepon</th>
+                            <th class="text-center" style="width: 15%;">Nomor telepon</th>
                             <th class="text-center" style="width: 15%">Aksi</th>
                         </tr>
                     </thead>

@@ -36,6 +36,9 @@ class AuthController extends Controller
                 $request->session()->regenerate();
                 return redirect()->intended('/');
             }
+
+            Session::flash('status', 'failed');
+            Session::flash('message', 'Username atau password salah');
             return redirect('/login');
         }
     }

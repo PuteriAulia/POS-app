@@ -50,13 +50,14 @@
                     <div class="form-group">
                         <label for="suplier">Role</label>
                         <div class="input-group">
-                            <input type="text"  id="roleEdit" name="role" value="{{ $data->id }}" hidden>
+                            <input type="text"  id="roleEdit" name="role" value="{{ $data->role_id }}" hidden>
                             <input type="text" class="form-control form-control-alt" id="roleCode" value="{{ $data->role->role_code }}">
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" id="modal-find-role">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
+                            <span class="text-danger error_text role_error"></span>
                         </div>
                         <span class="text-danger error_text role_error"></span>
                     </div>
@@ -135,7 +136,7 @@
         var roleCode = $(this).data('rolecode')
 
         $('#roleCode').val(roleCode)
-        $('#roleStore').val(roleId)
+        $('#roleEdit').val(roleId)
         $('#form-find-role').modal('hide')
     })
 
@@ -157,6 +158,7 @@
                 phone: $('#phoneEdit').val(),
             },
             success: function(res){
+                // console.log(res)
                 if (res.errors) {
                     $.each(res.errors, function(prefix,value){
                         $('span.'+prefix+'_error').text(value[0])
