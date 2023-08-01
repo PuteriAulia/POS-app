@@ -1,4 +1,6 @@
 <?php 
+
+use Illuminate\Support\Carbon;
     function rupiahFormat($nominal)
     {
         return "Rp ".number_format($nominal,0,',','.');
@@ -33,4 +35,8 @@
         }
     }
 
+    function dateFormat($date)
+    {
+        return Carbon::parse($date)->translatedFormat('d F Y');
+    }
 ?>

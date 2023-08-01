@@ -29,7 +29,10 @@
 
 @section('content')
 <div class="content">
-    <div class="block block-rounded">
+    <div class="block block-rounded"> 
+        <div class="block-header">
+            <button class="btn btn-alt-primary" id="modal-report">Report bulanan</button>
+        </div>
         <div class="block-content">
             <div class="table-responsive">
                 <table id="transaction-table" class="table table-striped table-vcenter">
@@ -47,6 +50,7 @@
         </div>
     </div>
 </div>
+@include('transaction.formReportTransaction')
 @endsection
 
 @push('js')
@@ -63,7 +67,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    // DataTable Suplier
+    // DataTable Transaction
     $(function(){
         $('#transaction-table').DataTable({
             processing: true,
@@ -80,22 +84,9 @@
         });
     })
 
-    // Show data transaction
-    // $('body').on('click','#modal-detail-transaction', function(){
-    //     let id = $(this).data('id')
-    //     $.ajax({
-    //         url : 'transaksi/'+id,
-    //         type: 'GET',
-    //         success : function(res){
-    //             $('#username-transaksi').text('username | '+res.transaction[0].transaction_code)
-    //             $('#grandTotal').text('Rp '+res.transaction[0].transaction_grand_total)
-    //             $('#grandTotal-down').text('Rp '+res.transaction[0].transaction_grand_total)
-    //             $('#disc').text('Rp '+res.transaction[0].transaction_disc)
-    //             $('#total').text('Rp '+res.transaction[0].transaction_total)
-    //             console.log(res.detail[0])
-    //         }
-    //     })
-    //     $('#detail-transaction').modal('show');
-    // })
+    // Show modal month report 
+    $('body').on('click','#modal-report',function(){
+        $('#form-report').modal('show')
+    })
 </script>
 @endpush

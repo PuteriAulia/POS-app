@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\ReportTransactionChart;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
@@ -61,6 +62,24 @@ class TransactionController extends Controller
         return view('transaction/detailTransaction',[
             'transaction'       => $transaction,
             'transactionDetail' => $transactionDetail,
+        ]);
+    }
+
+    public function report(Request $request) 
+    {
+        $start = $request->startPeriode;
+        $last  = $request->lastPeriode;
+        
+        $incomeTransaction = Transaction::whereDate('transaction_date','>=',$start)->whereDate('transaction_date','<=',$last)->sum('transaction_grand_total');
+
+        $transaction = Transaction::whereDate('transaction_date','>=',$start)->whereDate('transaction_date','<=',$last)->get();
+
+        $totalTransaction = count($transaction);
+
+        return view('transaction.reportTransaction',[
+            'transaction'       => $transaction,
+            'incomeTransaction' => $incomeTransaction,
+            'totalTransaction'  => $totalTransaction,
         ]);
     }
 
