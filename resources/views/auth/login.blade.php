@@ -46,11 +46,11 @@
                                 <!-- Sign In Block -->
                                 <div class="block block-rounded block-themed mb-0">
                                     <div class="block-header bg-primary-dark">
-                                        <h3 class="block-title">Sign In</h3>
+                                        <h3 class="block-title">Log In</h3>
                                     </div>
                                     <div class="block-content">
                                         <div class="p-sm-3 px-lg-4 py-lg-5">
-                                            <h1 class="h2 mb-1">TokuKu</h1>
+                                            <h1 class="h2 mb-1">TokoKu</h1>
                                             <p class="text-muted">
                                                 Selamat datang, silahkan masukkan data.
                                             </p>
@@ -83,7 +83,7 @@
                                                 <div class="form-group row">
                                                     <div class="col-md-6 col-xl-5">
                                                         <button type="submit" class="btn btn-block btn-alt-primary">
-                                                            <i class="fa fa-fw fa-sign-in-alt mr-1"></i> Sign In
+                                                            <i class="fa fa-fw fa-sign-in-alt mr-1"></i> Masuk
                                                         </button>
                                                     </div>
                                                 </div>

@@ -31,7 +31,7 @@
 <div class="content">
     <div class="block block-rounded"> 
         <div class="block-header">
-            <button class="btn btn-alt-primary" id="modal-report">Report bulanan</button>
+            <button class="btn btn-alt-primary" id="modal-report">Report</button>
         </div>
         <div class="block-content">
             <div class="table-responsive">
@@ -50,7 +50,7 @@
         </div>
     </div>
 </div>
-@include('transaction.formReportTransaction')
+@include('transaction.formReportDateTransaction')
 @endsection
 
 @push('js')

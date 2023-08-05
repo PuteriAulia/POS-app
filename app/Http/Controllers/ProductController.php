@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Suplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -105,13 +106,14 @@ class ProductController extends Controller
     {
         //
     }
-
+ 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        $product = Product::where('id',$id)->get();
+        $productId = Crypt::decrypt($id);
+        $product = Product::where('id',$productId)->get();
         $supliers = Suplier::where('suplier_status','active')->get();
         
         return view('product.formEditProduct',[
@@ -125,6 +127,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $productId = Crypt::decrypt($id);
         $validate = Validator::make($request->all(),[
             'name'      =>  'required',
             'suplier'   =>  'required',
@@ -141,7 +144,7 @@ class ProductController extends Controller
             return response()->json(['errors'=> $validate->errors()->toArray()]);
         }else{
             // Update suplier
-            Product::where('id',$id)->update([
+            Product::where('id',$productId)->update([
                 'product_name'    => $request->name,
                 'suplier_id'      => $request->suplier,
                 'product_purchase'=> $request->purchase,
@@ -159,7 +162,8 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      */
     public function delete($id){
-        Product::where('id',$id)->update([
+        $productId = Crypt::decrypt($id);
+        Product::where('id',$productId)->update([
             'product_status' => 'inactive',
         ]);
         return response()->json([

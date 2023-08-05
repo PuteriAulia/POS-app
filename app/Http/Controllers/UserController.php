@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
@@ -100,7 +101,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::where('id',$id)->get();
+        $userId = Crypt::decrypt($id);
+        $user = User::where('id',$userId)->get();
         $roles = Role::where('role_status','active')->get();
 
         return view('user.formEditUser',[
@@ -122,7 +124,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // return $request->role;
+        $userId = Crypt::decrypt($id);
         $validate = Validator::make($request->all(),[
             'name'  =>  'required',
             'phone' =>  'required|numeric',
@@ -138,7 +140,7 @@ class UserController extends Controller
             return response()->json(['errors'=> $validate->errors()->toArray()]);
         }else{
             // Update suplier
-            User::where('id',$id)->update([
+            User::where('id',$userId)->update([
                 'name'    => $request->name,
                 'phone'   => $request->phone,
                 'role_id' => $request->role,
@@ -161,7 +163,8 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        User::where('id',$id)->update([
+        $userId = Crypt::decrypt($id);
+        User::where('id',$userId)->update([
             'status' => 'inactive',
         ]);
         return response()->json([

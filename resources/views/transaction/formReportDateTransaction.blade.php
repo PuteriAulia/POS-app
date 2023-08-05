@@ -10,7 +10,7 @@
                         </button>
                     </div> 
                 </div>
-                <form action="transaksi/report" method="post">
+                <form action="transaksi/report-periode" method="post">
                     @csrf
                     <div class="block-content font-size-sm">
                         <div class="form-group">

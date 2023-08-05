@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Product;
 use App\Models\ProductOut;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -52,7 +53,7 @@ class ProductOutController extends Controller
             'product'   => 'required',
             'date'      => 'required',
             'qty'       => 'required',
-        ],[
+        ],[ 
             'product.required'  => "Nama barang wajib diisi",
             'date.required'     => "Tanggal wajib diisi",
             'qty.required'      => "Qty wajib diisi",
@@ -106,7 +107,8 @@ class ProductOutController extends Controller
      */
     public function show(string $id)
     {
-        $productOut = ProductOut::where('id',$id)->get();
+        $productId = Crypt::decrypt($id);
+        $productOut = ProductOut::where('id',$productId)->get();
 
         foreach ($productOut as $data) {
             $productId = $data->product_id;
@@ -124,28 +126,14 @@ class ProductOutController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
+        $productId = Crypt::decrypt($id);
+
         //Decrease product stock
-        $productOut = ProductOut::where('id',$id)->get();
+        $productOut = ProductOut::where('id',$productId)->get();
         foreach ($productOut as $produckOutData) {
             $productOutQty = $produckOutData->productOut_qty;
             $productOutProductId = $produckOutData->product_id;
@@ -162,7 +150,7 @@ class ProductOutController extends Controller
         ]);
 
         // Delete productIn
-        ProductOut::where('id',$id)->delete();
+        ProductOut::where('id',$productId)->delete();
 
         return response()->json([
             'status' => 'success',

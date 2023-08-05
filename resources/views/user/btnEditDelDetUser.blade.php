@@ -1,10 +1,11 @@
 <div class="text-center">
-    <a href="user/{{ $data->id }}">
+    <?php $userId = Crypt::encrypt($data->id) ?>
+    <a href="user/{{ $userId }}">
         <button class="btn btn-sm btn-warning">
             <i class="si si-pencil"></i>
         </button>
     </a>
-    <button class="btn btn-sm btn-danger" id="btn-del" data-id="{{ $data->id }}">
+    <button class="btn btn-sm btn-danger" id="btn-del" data-id="{{ $userId }}">
         <i class="si si-trash"></i>
     </button>
 </div>

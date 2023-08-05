@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -91,7 +92,8 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        $role = Role::where('id',$id)->get();
+        $roleId = Crypt::decrypt($id);
+        $role = Role::where('id',$roleId)->get();
         return response()->json([
             'status' => 'success',
             'data'   => $role,
@@ -103,6 +105,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $roleId = Crypt::decrypt($id);
         $validate = Validator::make($request->all(),[
             'name'     => 'required',
         ],[
@@ -112,7 +115,7 @@ class RoleController extends Controller
         if($validate->fails()){
             return response()->json(['errors'=>$validate->errors()->toArray()]);
         }else{
-            Role::where('id',$id)->update([
+            Role::where('id',$roleId)->update([
                 'role_name' => $request->name,
             ]);
 
@@ -126,14 +129,10 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
-
     public function delete(string $id)
     {
-        Role::where('id',$id)->update([
+        $roleId = Crypt::decrypt($id);
+        Role::where('id',$roleId)->update([
             'role_status' => 'inactive',
         ]);
         

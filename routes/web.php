@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::resource('transaksi',TransactionController::class);
     Route::get('/transaksi/printDetail/{id}',[TransactionController::class, 'print']);
-    Route::post('transaksi/report',[TransactionController::class, 'report']);
+    Route::post('transaksi/report-periode',[TransactionController::class, 'reportDate']);
 
     Route::resource('user',UserController::class);
     Route::put('user/{id}/hapus',[UserController::class,'delete']);

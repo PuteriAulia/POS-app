@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\ProductIn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -106,7 +107,8 @@ class ProductInController extends Controller
      */
     public function show(string $id)
     {
-        $productIn = ProductIn::where('id',$id)->get();
+        $productId = Crypt::decrypt($id);
+        $productIn = ProductIn::where('id',$productId)->get();
 
         foreach ($productIn as $data) {
             $productId = $data->product_id;
@@ -124,28 +126,14 @@ class ProductInController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
+        $productInId = Crypt::decrypt($id);
+
         //Decrease product stock
-        $productIn = ProductIn::where('id',$id)->get();
+        $productIn = ProductIn::where('id',$productInId)->get();
         foreach ($productIn as $produckInData) {
             $productInQty = $produckInData->productIn_qty;
             $productInProductId = $produckInData->product_id;
@@ -162,7 +150,7 @@ class ProductInController extends Controller
         ]);
 
         // Delete productIn
-        ProductIn::where('id',$id)->delete();
+        ProductIn::where('id',$productInId)->delete();
 
         return response()->json([
             'status' => 'success',

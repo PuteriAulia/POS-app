@@ -1,10 +1,11 @@
 <div class="text-center">
-    <a href="/barang/{{ $data->id }}/edit">
+    <?php $productId = Crypt::encrypt($data->id) ?>
+    <a href="/barang/{{ $productId }}/edit">
         <button class="btn btn-sm btn-warning" id="modal-edit-product">
             <i class="si si-pencil"></i>
         </button>
     </a>
-    <button class="btn btn-sm btn-danger" id="btn-del" data-id="{{ $data->id }}">
+    <button class="btn btn-sm btn-danger" id="btn-del" data-id="{{ $productId }}">
         <i class="si si-trash"></i>
     </button>
 </div>

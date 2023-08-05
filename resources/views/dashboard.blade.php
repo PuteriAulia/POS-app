@@ -21,6 +21,16 @@
 
 @section('content')
 <div class="content">
+    {{-- Alert --}}
+    @if (Session::has('status')=='success')
+    <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+        {{ Session::get('message') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+
     <div class="row row-deck">
         <!-- Income -->
         <div class="col-sm-6 col-xl-3">
@@ -129,6 +139,5 @@
 
 @push('js')
 <script src="{{ $chart->cdn() }}"></script>
-
 {{ $chart->script() }}
 @endpush

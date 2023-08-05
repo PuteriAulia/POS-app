@@ -46,8 +46,9 @@
                                     </button>
                                 </div>
                             @endif
-
-                            <input type="hidden" class="form-control form-control-alt" id="id" name="id" value="{{ $data->id }}">
+                            
+                            <?php $userId = Crypt::encrypt($data->id) ?>
+                            <input type="hidden" class="form-control form-control-alt" id="id" name="id" value="{{ $userId }}">
 
                             <div class="form-group">
                                 <label for="block-form1-name">Nama user</label>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Suplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -102,7 +103,8 @@ class SuplierController extends Controller
      */
     public function edit(string $id)
     {
-        $suplier = Suplier::where('id',$id)->get();
+        $suplierId = Crypt::decrypt($id);
+        $suplier = Suplier::where('id',$suplierId)->get();
         return response()->json([
             'status' => 'success',
             'data'   => $suplier,
@@ -114,6 +116,7 @@ class SuplierController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $suplierId = Crypt::decrypt($id);
         $validate = Validator::make($request->all(),[
             'name'     => 'required',
             'address'  => 'required',
@@ -127,7 +130,7 @@ class SuplierController extends Controller
         if($validate->fails()){
             return response()->json(['errors'=>$validate->errors()->toArray()]);
         }else{
-            Suplier::where('id',$id)->update([
+            Suplier::where('id',$suplierId)->update([
                 'suplier_name'    => $request->name,
                 'suplier_address' => $request->address,
                 'suplier_phone'   => $request->phone,
@@ -150,7 +153,8 @@ class SuplierController extends Controller
 
     public function delete($id)
     {
-        Suplier::where('id',$id)->update([
+        $suplierId = Crypt::decrypt($id);
+        Suplier::where('id',$suplierId)->update([
             'suplier_status' => 'inactive',
         ]);
         

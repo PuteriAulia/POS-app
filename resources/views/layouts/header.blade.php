@@ -33,10 +33,11 @@
                         <p class="mb-0 text-white-50 font-size-sm">{{ ucwords(Auth::user()->role->role_name) }}</p>
                     </div>
                     <div class="p-2">
-                        <a class="dropdown-item d-flex align-items-center justify-content-between" href="/pengaturan-akun/{{ Auth::user()->id }}">
+                        <?php $userId = Crypt::encrypt(Auth::user()->id) ?>
+                        <a class="dropdown-item d-flex align-items-center justify-content-between" href="/pengaturan-akun/{{ $userId }}">
                             <span class="font-size-sm font-w500">Pengaturan akun</span>
                         </a>
-                        <a class="dropdown-item d-flex align-items-center justify-content-between" href="/pengaturan-password/{{ Auth::user()->id }}">
+                        <a class="dropdown-item d-flex align-items-center justify-content-between" href="/pengaturan-password/{{ $userId }}">
                             <span class="font-size-sm font-w500">Ubah password</span>
                         </a>
                         <div role="separator" class="dropdown-divider"></div>

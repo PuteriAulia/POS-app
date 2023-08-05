@@ -7,8 +7,10 @@ use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -56,8 +58,9 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        $transaction = Transaction::where('transaction_code',$id)->get();
-        $transactionDetail = TransactionDetail::where('transaction_code',$id)->get();
+        $transactionId = Crypt::decrypt($id);
+        $transaction = Transaction::where('transaction_code',$transactionId)->get();
+        $transactionDetail = TransactionDetail::where('transaction_code',$transactionId)->get();
 
         return view('transaction/detailTransaction',[
             'transaction'       => $transaction,
@@ -65,7 +68,7 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function report(Request $request) 
+    public function reportDate(Request $request) 
     {
         $start = $request->startPeriode;
         $last  = $request->lastPeriode;
@@ -76,7 +79,7 @@ class TransactionController extends Controller
 
         $totalTransaction = count($transaction);
 
-        return view('transaction.reportTransaction',[
+        return view('transaction.reportDateTransaction',[
             'transaction'       => $transaction,
             'incomeTransaction' => $incomeTransaction,
             'totalTransaction'  => $totalTransaction,
@@ -109,8 +112,9 @@ class TransactionController extends Controller
 
     public function print($id)
     {
-        $transaction = Transaction::where('transaction_code',$id)->get();
-        $transactionDetail = TransactionDetail::where('transaction_code',$id)->get();
+        $transactionId = Crypt::decrypt($id);
+        $transaction = Transaction::where('transaction_code',$transactionId)->get();
+        $transactionDetail = TransactionDetail::where('transaction_code',$transactionId)->get();
 
         return view('transaction.printTransaction',[
             'transaction'       => $transaction,

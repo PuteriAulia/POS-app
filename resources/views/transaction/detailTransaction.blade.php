@@ -31,8 +31,11 @@
         <div class="block block-rounded block-themed">
             <div class="block-header bg-modern">
                 <h3 class="block-title">Detail Transaksi</h3>
-                <?php foreach($transaction as $data): ?>
-                <a href="/transaksi/printDetail/{{ $data->transaction_code }}">
+                <?php 
+                    foreach($transaction as $data): 
+                    $transactionId = Crypt::encrypt($data->transaction_code)
+                ?>
+                <a href="/transaksi/printDetail/{{ $transactionId }}">
                     <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-fw fa-print"></i> Print</button>
                 </a> 
                 <?php endforeach; ?>

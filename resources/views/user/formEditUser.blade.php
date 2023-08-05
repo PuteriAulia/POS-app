@@ -35,12 +35,12 @@
                     Ubah
                 </button>
             </div>
-        </div>
+        </div> 
         <div class="block-content">
             <div class="row justify-content-center py-sm-3 py-md-5">
                 @foreach ($user as $data)
                 <div class="col-sm-10 col-md-8">
-                    <input type="text" id="idEdit" name="id" value="{{ $data->id }}" hidden>
+                    <input type="text" id="idEdit" name="id" value="{{ Crypt::encrypt($data->id) }}" hidden>
 
                     <div class="form-group">
                         <label for="name">Nama</label>
